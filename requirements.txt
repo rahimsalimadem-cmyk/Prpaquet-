@@ -1,19 +1,39 @@
-streamlit
-pandas
-plotly
-scipy
-statsmodels
-scikit-learn
-joblib
-requests
-pillow
-numpy
+# Ovin Manager Pro - dÃ©pendances testÃ©es et compatibles entre elles
+# Installation : pip install -r requirements.txt
+#
+# TENSORFLOW RETIRÃ‰ TEMPORAIREMENT : Streamlit Community Cloud force
+# actuellement Python 3.14 sur les nouveaux dÃ©ploiements (bug de plateforme,
+# le sÃ©lecteur de version dans "Advanced settings" est actuellement sans
+# effet - voir https://github.com/streamlit/streamlit/issues/15326), et
+# TensorFlow ne fournit aucune wheel pour Python 3.14 pour le moment. Le code
+# (main.py) gÃ¨re dÃ©jÃ  l'absence de tensorflow : la dÃ©tection de points
+# anatomiques utilise MediaPipe, et la page "Apprentissage" (entraÃ®nement
+# d'un modÃ¨le custom) affiche un message et se dÃ©sactive proprement.
+# â†’ DÃ¨s que TensorFlow publiera des wheels pour Python 3.14 (ou que le bug de
+# sÃ©lection de version sera corrigÃ© cÃ´tÃ© Streamlit Cloud), remettre la ligne :
+#   tensorflow>=2.18,<2.22
+#   protobuf>=6.31.1,<8
+# ci-dessous, et Ã©ventuellement re-forcer Python 3.11 via Advanced settings.
 
-opencv-python-headless
-mediapipe
-streamlit-image-coordinates
+streamlit>=1.60,<2
+pandas>=2.2,<3.1
+plotly>=6.0,<7
+scipy>=1.14,<2
+statsmodels>=0.14,<0.15
+scikit-learn>=1.5,<2
+joblib>=1.4,<2
+requests>=2.31,<3
+pillow>=10,<13
+numpy>=1.26,<3
 
-tensorflow
-protobuf
+opencv-python-headless>=4.10,<5
+mediapipe>=0.10.30,<1
+streamlit-image-coordinates>=0.4,<0.5
 
+# tensorflow>=2.18,<2.22   # dÃ©sactivÃ©, voir note en haut du fichier
+# protobuf>=6.31.1,<8      # dÃ©sactivÃ©, voir note en haut du fichier
 
+# NE PAS ajouter ydata-profiling / streamlit-pandas-profiling : ces paquets
+# dÃ©pendent de numba/llvmlite, qui ne fournissent pas toujours de wheel prÃªte
+# pour les versions Python trÃ¨s rÃ©centes et cassent le build sur Streamlit
+# Cloud. La page "IA & Data Mining" fonctionne sans ces paquets.
